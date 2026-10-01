@@ -1,0 +1,142 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Hollow Pines — Arquivos da Ordem</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IM+Fell+English&family=Caveat&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0c;--p:#d9cfb4;--pd:#a79c7e;--r:#8a1c1c;--b:#5d7a90;--l:#2a2a2c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:inherit}html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--p);font:16px/1.55 'IM Fell English',Georgia,serif;overflow:hidden}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.07;background:repeating-radial-gradient(#fff 0 1px,transparent 1px 3px);animation:n 1s steps(3) infinite}
+@keyframes n{50%{transform:translate(2px,1px)}}
+.m{font-family:'Special Elite','Courier New',monospace}.h{font-family:Caveat,cursive;color:var(--b);font-size:1.2em}
+#boot{position:fixed;inset:0;background:#000;z-index:9;padding:8vh 7vw;overflow:auto}
+#boot pre{white-space:pre-wrap;color:#9bc29b;margin:0 0 20px;min-height:260px}
+button{font:inherit;cursor:pointer;background:none;color:var(--p);border:1px solid var(--pd);padding:8px 14px}
+button:hover{background:var(--r);border-color:var(--r)}
+#app{display:none;height:100%;grid-template-columns:240px 1fr}
+nav{border-right:1px solid var(--l);padding:14px;overflow:auto;background:#0e0e10}
+nav h1{font-size:18px;letter-spacing:3px;margin:0 0 4px;color:#fff}nav small{color:var(--pd)}
+nav a{display:block;padding:7px 4px;cursor:pointer;border-bottom:1px dotted var(--l);font-size:14px}nav a:hover,nav a.on{color:#fff;background:#1a1112}
+input{width:100%;background:#050505;color:var(--p);border:1px solid var(--pd);padding:8px;margin:10px 0;font:inherit}
+main{overflow:auto;padding:24px 28px 80px}
+h2{font-weight:400;letter-spacing:2px;border-bottom:2px solid var(--r);padding-bottom:6px}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.c{background:#d9cfb4;color:#1b1710;padding:14px;cursor:pointer;box-shadow:3px 4px 10px #000;transform:rotate(var(--t,0deg));transition:.4s;position:relative}
+.c:hover{transform:rotate(0) scale(1.03)}.c h3{margin:6px 0;font-weight:400}.c p{font-size:14px;margin:0}
+.c.lk{background:#2a2a2c;color:#777}
+.tg{font:11px 'Special Elite',monospace;border:1px solid var(--r);color:var(--r);padding:1px 5px;display:inline-block;transform:rotate(-2deg)}
+.lk .tg{color:#777;border-color:#777}
+#modal{position:fixed;inset:0;background:#000c;display:none;z-index:8;align-items:center;justify-content:center;padding:14px}
+#modal>div{background:#d9cfb4;color:#1b1710;max-width:640px;width:100%;max-height:88vh;overflow:auto;padding:24px;animation:z .5s}
+@keyframes z{from{transform:scale(.85) rotate(-2deg);opacity:0}}
+.st{position:absolute;right:10px;top:10px;color:var(--r);border:3px double var(--r);padding:2px 8px;transform:rotate(8deg);font:bold 12px 'Special Elite'}
+.red{background:#111;color:#111;padding:0 4px;user-select:none}
+.tl{border-left:2px solid var(--r);margin-left:8px;padding-left:20px}.tl>div{margin-bottom:26px;position:relative}.tl>div:before{content:"";position:absolute;left:-27px;top:6px;width:12px;height:12px;background:var(--r);border-radius:50%}
+.pz{background:#141416;border:1px solid var(--l);padding:14px;margin:14px 0}.pz button{margin:3px;font-size:20px}
+.ok{color:#9bc29b}.mut{color:var(--pd)}
+svg text{fill:var(--p);font:11px 'Special Elite',monospace}svg circle{fill:#1a1112;stroke:var(--pd);cursor:pointer}svg circle:hover{stroke:#fff}
+#mb{display:none;position:fixed;top:calc(8px + env(safe-area-inset-top,0px));left:8px;z-index:5;background:#000}
+#clk{position:fixed;right:10px;bottom:calc(8px + env(safe-area-inset-bottom,0px));color:var(--pd);font-size:12px;z-index:4}
+#glt{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#000;z-index:10;color:var(--r);font-size:7vw;letter-spacing:.3em}
+@media(max-width:760px){#app{grid-template-columns:1fr}nav{position:fixed;inset:0 25% 0 0;z-index:6;transform:translateX(-100%);transition:.3s}nav.o{transform:none}#mb{display:block}main{padding-top:56px}}
+</style></head><body>
+<div id="boot"><pre class="m" id="bt"></pre><button id="go" class="m" style="display:none">ACESSAR ARQUIVOS</button></div>
+<div id="glt" class="m"></div><button id="mb" class="m">☰</button><div id="clk" class="m"></div>
+<div id="app"><nav id="nv"><h1 class="m">HOLLOW PINES</h1><small class="m">ARQUIVOS DA ORDEM</small><input id="q" placeholder="Busca global…"><div id="menu"></div><button id="mst" class="m" style="margin-top:14px;width:100%">ACESSO DO MESTRE</button><p class="mut m" id="unl" style="font-size:12px"></p></nav><main id="mn"></main></div>
+<div id="modal"><div id="md"></div></div>
+<script>
+const MASTER_PASS='hollow'; // troque a senha aqui
+const TG={C:'REGISTRO CONFIRMADO',R:'RELATO',H:'HIPÓTESE',X:'INFORMAÇÃO CLASSIFICADA',K:'ARQUIVO CORROMPIDO'};
+const SEC=[['cron','CRONOLOGIA'],['pers','PERSONAGENS'],['npc','NPCs'],['org','ORGANIZAÇÕES'],['equip','EQUIPES DO HEXATOMBE'],['mito','MITOLOGIA'],['loc','LOCAIS'],['inc','INCIDENTES'],['doc','DOCUMENTOS'],['obj','OBJETOS PARANORMAIS'],['rel','RELAÇÕES'],['cls','ARQUIVOS CLASSIFICADOS']];
+// [id, seção, nome, tag, texto, trancado?]
+const D=[
+['rosa','pers','Rosa Andrade','C','Jogadora: Cecilia · Combatente · Elemento: Conhecimento · 28 anos. Nascida em 29/04/1942 no interior do Mato Grosso, filha do Coronel Augusto Andrade e da professora Helena Andrade Lima. Ex-atleta de natação, tornou-se militar. Após uma experiência numa piscina profunda demais — figuras pálidas sob a água e uma mão desconhecida que a salvou — desenvolveu trauma da água. Em 1968 sobreviveu à missão numa instalação de detenção abandonada perto de Corumbá; o relatório foi confiscado e ela recebeu ordens de esquecer. OBJETIVO: descobrir a verdade sobre Corumbá e sua ligação com a piscina.'],
+['thomas','pers','Thomas Tarantino','C','Jogador: André · Ocultista · Conhecimento · 24 anos. Homem negro, cabelos trançados, roupas caras, ~1,73m. Debochado e arrogante — uma defesa contra traumas. Família riquíssima envolvida com pactos e rituais; era usado como combustível de medo. No time skip integrou a Seita das Máscaras, aprendeu a se mover pelas sombras e contatou a Magistrada. Seus poderes têm preço: deve favores. OBJETIVO: "Chutar a bunda do paranormal."'],
+['sal','pers','Sal Fischer','C','Jogador: Mateus Sabino · Ocultista · Sangue · 22 anos. Cabelos verdes, máscara/prótese facial, antissocial, fã de rock e histórias de fantasmas, tem uma guitarra da sorte. Um acidente de carro matou sua mãe e deformou seu rosto; fez um pacto para voltar à vida e paga o preço. Recentemente: contato com Eduarda/Viktoria, um show, um ataque, um poderoso Paradoxo, quase morreu; recebeu um número de telefone e um símbolo ritualístico. OBJETIVO: ser guitarrista de uma banda famosa.'],
+['anahi','pers','Anahi','C','Jogadora: Emanuelle · Especialista · Morte · "Chef do Outro Lado". Presença intimidadora, pinturas rituais vermelhas e pretas, tatuagens indígenas com símbolos ocultistas, cocar ritual. Vê entidades do Outro Lado como mais que monstros. Criada em comunidade indígena ligada em segredo a um antigo Santo Berço; cozinhar, curar e ritualizar são um só processo. Recrutada pela Ordem. Na Amazônia, a floresta pareceu responder aos seus pensamentos e sua aparência mudou. OBJETIVO: reconstruir o equilíbrio entre Realidade e Outro Lado.'],
+['rafa','pers','Rafaela Carvalho','C','Jogadora: Murata · Especialista · Sangue · 21 anos. Cabelos longos pretos, pele clara, olhos pretos, atlética. Melancólica, revoltada, introvertida. Os pais, militares, desapareceram em Hollow Pines; criada por parentes. Seu vínculo com eles é uma arma das antigas caçadas da família. OBJETIVO: descobrir o que aconteceu com os pais.'],
+['som','pers','Som Goldman','C','Jogador: Eduardo · Combatente · Experimento · 21 anos. Extremamente robusto, cabelos pretos espetados. Criado como experimento na Segunda Guerra, quase toda a vida em laboratório; poderes de Energia e cauda de macaco. Enviado a Hollow Pines aos 15, teve contato com o Anfitrião. Desenvolveu um tumor paranormal e escolheu abandonar seus poderes de Energia. Antes: ser o humano mais forte do mundo. Agora: descobrir quem é sem aquilo que o tornava extraordinário.'],
+['mayzel','npc','Mayzel','C','Cabelos castanhos, óculos, nerd. Sobrevivente do incidente de Hollow Pines. Faz-tudo e fonte de informações no QG de São Paulo: entrega documentos, designa missões, conecta pistas e segura os jogadores de decisões absurdas.'],
+['ver','npc','Sr. Veríssimo','C','Líder da Ordem Realitas na região. Autoridade, responsável por missões e pela disciplina dos agentes. Puniu o grupo após o acidente no armazém.'],
+['bog','npc','Bogdana Volkov','C','16 anos, primeira personagem de Emanuelle. Treinada desde criança numa família soviética ligada à inteligência e ao militarismo. Fundamental na derrota de Tadeu e principal suporte da primeira metade da campanha. Reservada e controlada. Deixou a Ordem para fundar uma organização anti-paranormal em seu país.'],
+['chico','npc','Chico (Francisco de Souza)','C','Homem negro, baixinho, cicatriz no lábio, bigode fino, óculos coloridos, roupas floridas. Sócio de um bar/pub do submundo paranormal e contato de confiança de Thomas. Trocou um documento de um suposto sobrevivente do Hexatombe por 6kg de carne de criaturas paranormais.'],
+['amanda','npc','Amanda','C','Mulher parda, cabelos curtos, óculos. Bartender de dia no estabelecimento de Chico.'],
+['frank','npc','Franklin Ford','C','Encontrado catatônico. Após a invasão mental de Thomas, sua mente começou a voltar; a memória segue fragmentada. Detém informações fundamentais sobre o passado e o Hexatombe. Não participou do último Hexatombe, mas presenciou algo relacionado a ele durante a guerra. <span class="red">████████████████</span>'],
+['realitas','org','Ordem Realitas','C','Organização que protege a Realidade. QG relevante: São Paulo. Hierarquia, punições e arquivos secretos: REGISTRO INCOMPLETO. Os sobreviventes de Hollow Pines foram contatados por uma subdivisão americana e treinados como agentes.'],
+['mascaras','org','Seita das Máscaras','R','Thomas fez parte dela durante o time skip. Demais registros: INFORMAÇÃO NÃO DISPONÍVEL.'],
+['circ','equip','CIRCENSES','C','Equipe ligada ao circo: espetáculo, máscaras, fogo, crianças, ilusionismo, decadência. Membros conhecidos: Mario Augusto Nascimento (63, figura central), Leonora Gaspar (23; encontrada após incêndio num teatro municipal que matou seus pais, acolhida por Mario Augusto), Mario Viggado, Wagner Vasques, Otavio Batuto. Formaram a companhia "Circus"/"Circo Taumaturgo", que viaja em espetáculos.'],
+['buc','equip','BUCANEIROS','C','Equipe do Caribe: piratas/paranormais atrás de glória, tesouros, aventuras e artefatos. Mantêm relacionamento aberto entre adultos. Estética: navios, mapas, ouro, tempestades, ocultismo marítimo. Membros: REGISTRO INCOMPLETO.'],
+['yok','equip','YOKAIS','C','Equipe japonesa: ritos antigos, manifestações de entidades, tradições sobrenaturais e forja de armas paranormais. ARQUIVO INCOMPLETO — membros não registrados.'],
+['vam','equip','VAMPIROS','X','ARQUIVO RESTRITO. REGISTROS INSUFICIENTES. IDENTIDADE DOS MEMBROS: CLASSIFICADA.',1],
+['eug','equip','EUGÊNICOS','C','Equipe britânica, fruto de experimentos que causaram mutações com traços animais. Oliver Smith — Lebre; George Taylor — Coruja; Harry Johnson — Gato Selvagem; Noah Roberts — Corsa; William Brown — Urso; Ethan Walker — Lobo. Passaram décadas procurando uma cura.'],
+['ol','mito','Outro Lado e Realidade','C','Duas faces do mundo. O Outro Lado se manifesta em Hollow Pines e além; a Ordem existe para proteger a Realidade.'],
+['el','mito','Elementos','C','Conhecimento (Rosa, Thomas), Sangue (Sal, Rafaela), Morte (Anahi) e Energia (Som, abandonada). Cada termo abrirá uma ficha própria.'],
+['anf','mito','O Anfitrião','C','Esteve ligado a Som na primeira campanha e foi importante nos cinco anos de viagens. Uma parte dele vive em Som. NOTA: o sino paranormal de Hollow Pines e o Anfitrião não têm necessariamente ligação — não é conspiração.'],
+['mag','mito','A Magistrada','R','Entidade contatada por Thomas durante o time skip. REGISTRO INCOMPLETO.'],
+['sb','mito','Santo Berço','R','Local antigo ligado à comunidade indígena de Anahi. REGISTRO INCOMPLETO.'],
+['hex','mito','Hexatombe','X','STATUS: INFORMAÇÕES PARCIAIS. Há múltiplas equipes: Circenses, Bucaneiros, Yokais, Vampiros e Eugênicos. O último Hexatombe ocorreu antes; seus detalhes não estão disponíveis.',1],
+['hp','loc','Hollow Pines (Oregon, 1964)','C','Pequena cidade e acampamento de férias. Evento fundador da campanha: criaturas, mistérios sobre a origem da cidade e manifestações do Outro Lado. Os pais de Rafaela desapareceram aqui.'],
+['cor','loc','CORUMBÁ','K','Instalação de detenção abandonada de forma inexplicável, ligada a presos políticos (1968). Soldados desapareceram; vozes; documentos. Algo nos túneis parecia se alimentar de medo e sofrimento. Ligações visuais: ROSA · ÁGUA · PISCINA · CONHECIMENTO · GUERRA · HEXATOMBE. <span class="red">██████</span> <s>nomes riscados</s>'],
+['sp','loc','QG da Ordem — São Paulo','C','Base atual dos agentes. Onde o sino foi guardado e estudado.'],
+['se','loc','Usina Hidrelétrica (Sergipe)','C','Onde o sino paranormal foi encontrado.'],
+['am','loc','Amazônia','C','Cenário do desaparecimento de biólogos e ambientalistas.'],
+['sino','inc','Missão do Sino','C','Sal, Som, Rosa e Anahi foram a Sergipe transportar um sino paranormal. Thomas e Rafaela foram falar com Chico. Cultistas atacaram; Som absorveu energia do sino, causando uma reação em cadeia que despertou o Tempestuoso. O sino chegou ao QG.'],
+['arm','inc','Acidente no Armazém','C','Pesquisadores estudavam o sino. Sal, Anahi e Rafaela ignoraram as barreiras e se aproximaram; uma onda paranormal matou/desfigurou os pesquisadores. Sr. Veríssimo puniu o grupo.'],
+['show','inc','O Show','C','Franklin Ford catatônico; Thomas usou invasão mental e ele começou a despertar. Um segurança era cultista. Sal conheceu uma banda paranormal; Eduarda revelou natureza paranormal; Sal usou Paradoxo e a estrutura foi destruída. Ela deixou contato e símbolo ritualístico. Thomas sentiu mau presságio e localizou Sal.'],
+['amz','inc','Amazônia','C','Investigação de desaparecimentos. Encontraram Olivo; uma criatura aracnídea surgiu; a floresta reagiu a Anahi; Rafaela foi atacada; Anahi se transformou temporariamente. Durante os seis dias na floresta, Som esteve em espaço mental com o Anfitrião e abandonou seus poderes de Energia.'],
+['arc','inc','PRÓXIMO ARCO — ARQUIVO: CORUMBÁ','K','STATUS: INVESTIGAÇÃO PENDENTE. Franklin → Rosa → Guerra → Corumbá → Hexatombe → Conhecimento. Solução: não disponível.'],
+['d1','doc','Relatório de Corumbá (1968)','K','CONFISCADO. [RELATÓRIO] Parágrafos 1–4 ilegíveis. <span class="red">████████</span> "…não havia ninguém nas celas, mas as celas estavam ocupadas…"'],
+['d2','doc','Documento de Chico','R','Atribuído a um suposto sobrevivente do Hexatombe. Conteúdo: REGISTRO INCOMPLETO.'],
+['d3','doc','Anotação manuscrita','H','<span class="h">A água lembra. Por que a piscina tinha fundo?</span>'],
+['sinoO','obj','Sino paranormal','C','Encontrado na usina em Sergipe. Despertou o Tempestuoso ao reagir à energia de Som.'],
+['gui','obj','Guitarra da sorte','C','Pertence a Sal.'],
+['arma','obj','Arma da família Carvalho','C','Usada nas caçadas dos pais de Rafaela; seu vínculo com eles.'],
+['simb','obj','Símbolo ritualístico de Eduarda','R','Entregue a Sal com um número de telefone. Significado: INFORMAÇÃO NÃO DISPONÍVEL.']];
+const PER=[['PERÍODO I — HOLLOW PINES','1964','Crianças e adolescentes (12–15 anos) enviados a um acampamento no Oregon. Sobrevivem a eventos paranormais, contatam uma subdivisão americana da Ordem e são treinados. O evento fundador.'],['PERÍODO II — OS ANOS SEGUINTES','1964–1970','Alguns seguem na Ordem. Outros desaparecem. Outros desenvolvem relações com o paranormal.'],['PERÍODO III — TIME SKIP','1970 · 5 ANOS DEPOIS','Os sobreviventes retornam mais velhos, com novos integrantes. Momento atual da campanha.'],['PERÍODO IV — HEXATOMBE','???','REGISTROS DO FUTURO: ARQUIVO TEMPORALMENTE INCONSISTENTE. Algumas informações ainda não aconteceram. Outras talvez já tenham acontecido.']];
+const FS=[[17,'Eles vieram de lugares diferentes.'],[21,'Japão.'],[24,'Caribe.'],[31,'Inglaterra.'],[38,'O circo.'],[42,'Os mortos.'],[51,'Todos estão procurando alguma coisa.'],[52,'E todos acreditam que encontrarão.'],[53,'Nenhum deles entende o preço.']];
+const PZ={circ:{n:'CIRCENSES',a:'003',m:'A equipe foi registrada décadas antes do Hexatombe.',w:'MÁSCARA',dsc:'Ordem do espetáculo: abre-se a máscara, acende-se o fogo, as crianças riem, o carrossel gira, e a máscara cai.',b:['🎠','🎭','🔥','🎪','🎭'],s:['🎪','🎭','🔥','🎠','🎭']},
+buc:{n:'BUCANEIROS',a:'011',m:'TODO TESOURO TEM UM PREÇO.',dsc:'Marque no mapa, na ordem das tempestades: N → E → S → W.',b:['W · 12°','N · 18°','S · 63°','E · 77°'],s:['N · 18°','E · 77°','S · 63°','W · 12°']},
+yok:{n:'YOKAIS',a:'021',m:'ALGUMAS PORTAS NÃO DEVEM SER ABERTAS.',dsc:'Posicione os talismãs: Céu, Fogo, Espada, Porta.',b:['門','刀','天','火'],s:['天','火','刀','門']},
+eug:{n:'EUGÊNICOS',a:'031',m:'Ainda procuram a cura.',dsc:'Ordene o prontuário: Lebre, Coruja, Gato, Corsa, Urso, Lobo.',b:['URSO','GATO','LEBRE','LOBO','CORSA','CORUJA'],s:['LEBRE','CORUJA','GATO','CORSA','URSO','LOBO']}};
+const E={rosa:['pers','Rosa'],cor:['loc','Corumbá'],doc:['doc','Documentos'],hex:['mito','Hexatombe'],frank:['npc','Frank'],gue:['','Guerra'],con:['mito','Conhecimento'],hp:['loc','Hollow Pines'],eq:['equip','Equipes']};
+const $=s=>document.querySelector(s),L=(k,v)=>{try{return v===undefined?JSON.parse(localStorage.getItem(k)):localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
+let U=L('hp_u')||[],master=false,cur='cron';
+const save=()=>{L('hp_u',U);$('#unl').textContent='ARQUIVOS DESBLOQUEADOS: '+U.length+'/5'};
+// boot
+const lines=['HOLLOW PINES','REALITAS ARCHIVE SYSTEM','','> Inicializando banco de dados...','> Verificando integridade dos arquivos...','> 87% dos registros recuperados.','> 13% dos registros permanecem corrompidos.','','> AVISO: algumas informações deste arquivo podem provocar exposição paranormal.'];
+(async()=>{for(const l of lines){$('#bt').textContent+=l+'\n';await new Promise(r=>setTimeout(r,L('hp_seen')?60:450))}$('#go').style.display='block'})();
+$('#go').onclick=()=>{L('hp_seen',1);$('#boot').style.display='none';$('#app').style.display='grid';save();nav(cur);cl()};
+$('#menu').innerHTML=SEC.map((s,i)=>`<a data-k="${s[0]}">${String(i+1).padStart(2,'0')} — ${s[1]}</a>`).join('');
+$('#menu').onclick=e=>{if(e.target.dataset.k)nav(e.target.dataset.k)};
+$('#mb').onclick=()=>$('#nv').classList.toggle('o');
+$('#mst').onclick=()=>{if(master){master=false;$('#mst').textContent='ACESSO DO MESTRE';return}if(prompt('Senha do Mestre:')===MASTER_PASS){master=true;$('#mst').textContent='MESTRE ATIVO ✓'}else alert('ACESSO NEGADO')};
+$('#q').oninput=e=>{const v=e.target.value.toLowerCase().trim();if(v.length<2)return nav(cur);head('BUSCA: '+v);grid(D.filter(d=>(d[2]+d[4]).toLowerCase().includes(v)))};
+function head(t){$('#mn').innerHTML=`<h2 class="m">${t}</h2>`}
+function card(d,i){const lk=d[5]&&!master;return `<div class="c ${lk?'lk':''}" style="--t:${(i%5-2)*.6}deg" data-id="${d[0]}"><span class="tg">${TG[d[3]]}</span><h3 class="m">${d[2]}</h3><p>${lk?'ACESSO RESTRITO':d[4].replace(/<[^>]+>/g,'').slice(0,90)+'…'}</p></div>`}
+function grid(a){const g=document.createElement('div');g.className='g';g.innerHTML=a.map(card).join('')||'<p class="mut">INFORMAÇÃO NÃO DISPONÍVEL</p>';g.onclick=e=>{const c=e.target.closest('.c');if(c)open(c.dataset.id)};$('#mn').append(g)}
+function open(id){const d=D.find(x=>x[0]==id),lk=d[5]&&!master;const n=L('hp_n_'+id)||'';$('#md').innerHTML=`<span class="tg">${TG[d[3]]}</span><span class="st">CONFIDENCIAL</span><h2 class="m">${d[2]}</h2><p>${lk?'<b class="m">ACESSO RESTRITO</b> — registros insuficientes.':d[4]}</p>`+(master?`<hr><p class="m">NOTAS DO MESTRE</p><textarea id="mnote" rows="4" style="width:100%">${n}</textarea>`:'')+'<br><button onclick="closeM()" style="color:#1b1710">FECHAR</button>';$('#modal').style.display='flex';window.cid=id}
+window.closeM=()=>{const t=$('#mnote');if(t)L('hp_n_'+cid,t.value);$('#modal').style.display='none'};
+$('#modal').onclick=e=>{if(e.target.id=='modal')closeM()};
+function nav(k){cur=k;$('#nv').classList.remove('o');document.querySelectorAll('#menu a').forEach(a=>a.classList.toggle('on',a.dataset.k==k));$('#q').value='';const s=SEC.find(x=>x[0]==k);head(s[1]);const m=$('#mn');
+if(k=='cron'){m.insertAdjacentHTML('beforeend','<div class="tl">'+PER.map(p=>`<div><span class="m" style="color:var(--r)">${p[1]}</span><h3 class="m">${p[0]}</h3><p>${p[2]}</p></div>`).join('')+'</div>')}
+else if(k=='rel')graph();else if(k=='cls')cls();else grid(D.filter(d=>d[1]==k));
+if(k=='org')m.insertAdjacentHTML('beforeend','<p class="mut m">Hierarquia, missões e punições: REGISTRO INCOMPLETO.</p>');
+m.scrollTop=0}
+function graph(){const N={hp:[300,40],rosa:[110,110],cor:[110,200],doc:[300,200],gue:[300,120],frank:[500,150],hex:[300,300],con:[110,300],eq:[500,300]};
+const Ed=[['rosa','cor',0],['cor','doc',0],['doc','hex',1],['hex','frank',2],['frank','gue',2],['hp','rosa',0],['hex','eq',3],['cor','con',3],['rosa','con',1]];
+const open_=Ed.filter(e=>e[2]<=U.length);
+$('#mn').insertAdjacentHTML('beforeend',`<p class="mut">Novas conexões surgem conforme você desbloqueia arquivos (${U.length}/5). Toque um nó.</p><svg viewBox="0 0 600 340" style="width:100%;max-width:700px">${open_.map(e=>`<line x1="${N[e[0]][0]}" y1="${N[e[0]][1]}" x2="${N[e[1]][0]}" y2="${N[e[1]][1]}" stroke="${e[2]>1?'#8a1c1c':'#5d7a90'}" stroke-dasharray="${e[2]>1?'4':''}"/>`).join('')}${Object.entries(N).map(([k,p])=>`<g><circle data-n="${k}" cx="${p[0]}" cy="${p[1]}" r="22"/><text x="${p[0]}" y="${p[1]+4}" text-anchor="middle">${E[k][1]}</text></g>`).join('')}</svg><div id="ni" class="m"></div>`);
+$('#mn svg').onclick=e=>{const k=e.target.dataset.n;if(!k)return;const r=open_.filter(x=>x[0]==k||x[1]==k).map(x=>E[x[0]==k?x[1]:x[0]][1]);$('#ni').innerHTML=`<h3>${E[k][1]}</h3>Ligado a: ${r.join(', ')||'—'}`}}
+function cls(){const m=$('#mn');m.insertAdjacentHTML('beforeend','<p class="mut m">Cada enigma esconde uma pista sobre uma equipe do Hexatombe. Nem tudo parece um enigma.</p><div id="pzs"></div>');
+for(const k in PZ){const p=PZ[k],div=document.createElement('div');div.className='pz';const done=U.includes(k);let pos=0;
+div.innerHTML=`<b class="m">ENIGMA — ${p.n}</b><p class="mut">${p.dsc}</p><div></div><div class="m ok">${done?'ARQUIVO '+p.a+' › "'+p.m+'"':''}</div>`;
+const bx=div.children[2];p.b.forEach(x=>{const b=document.createElement('button');b.textContent=x;b.onclick=()=>{if(p.s[pos]==x){b.disabled=true;if(++pos==p.s.length)win(k,div)}else{pos=0;bx.querySelectorAll('button').forEach(z=>z.disabled=false);div.style.outline='1px solid red';setTimeout(()=>div.style.outline='',400)}};bx.append(b)});$('#pzs').append(div)}
+const v=document.createElement('div');v.className='pz';const vd=U.includes('vam');
+v.innerHTML=`<b class="m">ENIGMA — VAMPIROS</b><p class="mut">Passe o mouse / toque na escuridão abaixo.</p><div id="dk" style="background:#000;color:#000;padding:30px;transition:color 1s;cursor:help">NÃO OLHE PARA O ESPELHO.</div><div class="m ok">${vd?'ARQUIVO 042 › "Os mortos."':''}</div>`;
+m.append(v);const dk=v.querySelector('#dk');const rv=()=>{dk.style.color='#d9cfb4';setTimeout(()=>win('vam',v),1200)};dk.onmouseenter=rv;dk.ontouchstart=rv;
+m.insertAdjacentHTML('beforeend',`<h2 class="m">VOCÊ NÃO DEVERIA ESTAR LENDO ISTO.</h2>`+FS.map((f,i)=>`<p class="m" style="opacity:${i<=U.length+2?1:.15}">${i<=U.length+2?`[ARQUIVO ${f[0]}] "${f[1]}"`:'[ARQUIVO '+f[0]+'] ████████'}</p>`).join('')+'<p class="mut m">Registros do futuro: arquivos temporalmente inconsistentes.</p>')}
+function win(k,div){if(!U.includes(k)){U.push(k);save()}const p=PZ[k]||{a:'042',m:'Os mortos.'};div.querySelector('.ok').textContent='ARQUIVO '+p.a+' › "'+p.m+'" — DESBLOQUEADO'}
+// atmosfera
+function cl(){let f=0;const t=()=>{const d=new Date();$('#clk').textContent=f?$('#clk').textContent:d.toLocaleTimeString()};setInterval(t,1000);setInterval(()=>{if(Math.random()<.04){f=1;setTimeout(()=>f=0,4000)}},20000)}
+function glitch(t){const g=$('#glt');g.textContent=t;g.style.display='flex';setTimeout(()=>g.style.display='none',350)}
+setInterval(()=>{if($('#app').style.display=='grid'&&Math.random()<.03)glitch('VOCÊ JÁ VIU ISSO.')},30000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&$('#app').style.display=='grid'&&Math.random()<.4){const h=document.querySelector('h2');if(h)h.innerHTML='<s>'+h.textContent+'</s> ARQUIVO ENCONTRADO.'}});
+</script></body></html>
